@@ -9,11 +9,13 @@ private:
     int m_total_elementos;
     T* inicio;
     T* final;
+    T* posicao;
 
 public:
 	Lista();
 	~Lista();
 	void inserirNoInicio(T& no);
+	void inserirNaPosicao(T& no, posicao_);
 	void inserirNoFinal(T& no);
     T& removerDoInicio();
     T& removerDoFinal();
@@ -27,6 +29,7 @@ Lista<T>::Lista(){
 	this->m_total_elementos = 0;
 	inicio = NULL;
 	final = NULL;
+	posicao = NULL;
 }
 
 template<typename T>
@@ -46,11 +49,9 @@ void Lista<T>::inserirNoInicio(T& no) {
 
 		inicio = &no;
 		inicio->setNext(final);
-
 		final->setPrevious(inicio);
 
 	} else {
-
 
 		no.setNext(inicio);
 		inicio->setPrevious(&no);
@@ -61,6 +62,56 @@ void Lista<T>::inserirNoInicio(T& no) {
 	m_total_elementos++;	
 
 }
+
+template<typename T>
+void Lista<T>::inserirNaPosicao(T& no, posicao_){
+	
+	if(m_total_elementos == 0) {
+
+		inicio = &no;
+		posicao = &no;
+		final = &no;
+
+	} else if (m_total_elementos == 1){
+
+		posicao = &no;
+		inicio->setNext(final);
+		final->setPrevious(inicio);
+	
+	} else if (m_total_elementos > 1){
+
+		//posicao
+		inicio = &no;
+		inicio->setNext(final);
+		final->setPrevious(inicio);
+	}
+
+	m_total_elementos++;	
+
+}
+//EXEMPLO
+    // if (i < 0)
+    //     return;
+    // if (i == 0)
+    // {
+    //     inserirPrimeiro(valor);
+    //     return;
+    // }
+    // if (tamanho() >= i)
+    // {
+    //     No *no = primeiro, *aux, *novo;
+    //     novo = (No*) malloc (sizeof(No));
+    //     novo->info = valor;
+    //     int cont = 0;//para contagem da posição a partir de 0
+    //     while (cont < i-1)//i-1 para parar uma posição antes de i, para fazer a inserção na posição certa
+    //     {
+    //         no = no->proximo;
+    //         cont++;
+    //     }
+    //     aux = no->proximo;
+    //     no->proximo = novo;
+    //     novo->proximo = aux;
+    // }
 
 template<typename T>
 void Lista<T>::inserirNoFinal(T& no) {
@@ -74,7 +125,6 @@ void Lista<T>::inserirNoFinal(T& no) {
 
 		final = &no;
 		inicio->setNext(final);
-
 		final->setPrevious(inicio);
 
 	} else {
