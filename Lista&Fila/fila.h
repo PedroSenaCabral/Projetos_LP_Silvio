@@ -20,8 +20,8 @@ class Fila{
 		Fila(int capacidade_);
 		~Fila();
 
-		void enfileira(T& novo_);
-		T& desenfileira();
+		void enfileira(T elemento_);
+		T desenfileira();
 		bool vazio();
 		bool cheio();
 		int tamanho();
@@ -40,26 +40,24 @@ Fila<T>::~Fila(){
 }
 
 template<typename T>
-void Fila<T>::enfileira(T& novo_){
+void Fila<T>::enfileira(T elemento_){
 	if(tamanho() >= m_capacidade) {
-		cout << endl << "\nTentando add "<< novo_.getValue() <<" na fila." << endl;
-		cout << "Fila já chegou no seu limite." << endl;
+		cout << endl << "\nTentando add "<< elemento_ <<" na fila." << endl;
+		cout << "A fila chegou no seu limite." << endl;
 	} else {
-		this->m_elementos->inserirNoFinal(novo_);
-		cout << novo_.getValue() << " foi adicionado com sucesso." << endl;
+		this->m_elementos->inserirNoFinal(elemento_);
+		cout << elemento_ << " foi adicionado com sucesso." << endl;
 	}
-	
 }
 
 template<typename T>
-T& Fila<T>::desenfileira(){
+T Fila<T>::desenfileira(){
 	if(vazio()){
-		cerr<<"ERRO! Fila esta vazia. Nao desenfileira"<<endl;
+		cerr << "ERRO! Fila esta vazia. Nao desenfileira" << endl;
 		exit(0);
 	}
-	cout << "Chamando o pŕoximo da fila: " << endl;
+	cout << "Chamando o proximo da fila: " << endl;
 	return this->m_elementos->removerDoInicio();	
-	
 }
 
 template<typename T>

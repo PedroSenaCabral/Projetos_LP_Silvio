@@ -7,136 +7,167 @@ template <typename T>
 class Lista {
 private:
     int m_total_elementos;
-    T* inicio;
-    T* final;
-    T* posicao;
+    Node<T>* inicio;
+    Node<T>* final;
+
+	void unLinkNode(Node<T>* n);
+	void linkNodeAfter(Node<T>* novo, Node<T>* nPrev);
+	void linkNodeBefore(Node<T>* novo, Node<T>* nNext);
 
 public:
 	Lista();
 	~Lista();
-	void inserirNoInicio(T& no);
-	void inserirNaPosicao(T& no, posicao_);
-	void inserirNoFinal(T& no);
-    T& removerDoInicio();
-    T& removerDoFinal();
+
+	T get(int posicao_);
+
+	void inserirNoInicio(T elemento);
+	void inserirNoFinal(T elemento);
+	void inserirNaPosicao(T elemento, int posicao_);
+
+    T removerDoInicio();
+    T removerDoFinal();
+	T removerDaPosicao(int posicao_);
+
     bool vazio();
     int tamanho();
-
 };
 
 template<typename T>
 Lista<T>::Lista(){
 	this->m_total_elementos = 0;
-	inicio = NULL;
-	final = NULL;
-	posicao = NULL;
+	this->inicio = nullptr;
+	this->final = nullptr;
 }
 
 template<typename T>
 Lista<T>::~Lista() {
-
+	if(!this->vazio()){
+		Node<T>* n = this->inicio;
+		while(n->getNext() != nullptr){
+			Node<T>* destruir = n;
+			n = n->getNext();
+			delete destruir;
+		}
+		delete n;
+	}
 }
 
 template<typename T>
-void Lista<T>::inserirNoInicio(T& no) {
-
-	if(m_total_elementos == 0) {
-
-		inicio = &no;
-		final = &no;
-	
-	} else if (m_total_elementos == 1){
-
-		inicio = &no;
-		inicio->setNext(final);
-		final->setPrevious(inicio);
-
-	} else {
-
-		no.setNext(inicio);
-		inicio->setPrevious(&no);
-		inicio = &no;
-
-	}
-
-	m_total_elementos++;	
-
+T Lista<T>::get(int posicao_){
+    if (this->vazio())
+    {
+        // std::cerr << "Não há elementos na lista." << std::endl;
+        exit(0);
+    };
+	if (posicao_ > this->m_total_elementos + 1)
+    {
+        // std::cerr << "Indice inválido! O ulitmo elemento sera retornado." << std::endl;
+    };
+    if (posicao_ < 1)
+    {
+		// std::cerr << "Indice inválido! O primeiro elemento sera retornado." << std::endl;
+        posicao_ = 1;
+    };
+	Node<T> *aux = this->inicio;
+	int counter = 1;
+	while (aux->getNext() != nullptr && counter < posicao_)
+	{
+		aux = aux->getNext();
+		counter++;
+	};
+	return aux->getValue();
 }
 
 template<typename T>
-void Lista<T>::inserirNaPosicao(T& no, posicao_){
+void Lista<T>::inserirNaPosicao(T elemento, int posicao_){
 	
-	if(m_total_elementos == 0) {
+	if (posicao_ > this->m_total_elementos + 1)
+    {
+        // std::cerr << "Indice inválido! Elemento vai ser adicionado no final da sequencia." << std::endl;
+    };
 
-		inicio = &no;
-		posicao = &no;
-		final = &no;
+    if (posicao_ < 1)
+    {
+        posicao_ = 1;
+    };
 
-	} else if (m_total_elementos == 1){
-
-		posicao = &no;
-		inicio->setNext(final);
-		final->setPrevious(inicio);
-	
-	} else if (m_total_elementos > 1){
-
-		//posicao
-		inicio = &no;
-		inicio->setNext(final);
-		final->setPrevious(inicio);
-	}
-
-	m_total_elementos++;	
-
+    Node<T>* novo = new Node<T>(elemento);
+    
+    if (this->vazio())
+    {
+        this->inicio = novo;
+        this->final = novo;
+    }
+    else if(posicao_ > this->m_total_elementos){
+		this->linkNodeAfter(novo, this->final);
+    }
+    else
+    {
+		Node<T> *aux = this->inicio;
+        int counter = 1;
+        while (aux->getNext() != nullptr && counter < posicao_)
+        {
+            aux = aux->getNext();
+            counter++;
+        };
+		this->linkNodeBefore(novo, aux);
+    };
+    this->m_total_elementos++;
 }
-//EXEMPLO//
-    // if (i < 0)
-    //     return;
-    // if (i == 0)
-    // {
-    //     inserirPrimeiro(valor);
-    //     return;
-    // }
-    // if (tamanho() >= i)
-    // {
-    //     No *no = primeiro, *aux, *novo;
-    //     novo = (No*) malloc (sizeof(No));
-    //     novo->info = valor;
-    //     int cont = 0;//para contagem da posição a partir de 0
-    //     while (cont < i-1)//i-1 para parar uma posição antes de i, para fazer a inserção na posição certa
-    //     {
-    //         no = no->proximo;
-    //         cont++;
-    //     }
-    //     aux = no->proximo;
-    //     no->proximo = novo;
-    //     novo->proximo = aux;
-    // }
 
 template<typename T>
-void Lista<T>::inserirNoFinal(T& no) {
+void Lista<T>::inserirNoInicio(T elemento) {
+	this->inserirNaPosicao(elemento, 1);
+}
 
-	if(m_total_elementos == 0) {
+template<typename T>
+void Lista<T>::inserirNoFinal(T elemento) {
+	this->inserirNaPosicao(elemento, this->m_total_elementos+1);
+}
 
-		inicio = &no;
-		final = &no;
-	
-	} else if (m_total_elementos == 1){
+template<typename T>
+T Lista<T>::removerDaPosicao(int posicao_){
+    if (this->vazio())
+    {
+        // std::cerr << "Não há elementos à remover." << std::endl;
+        exit(0);
+    };
 
-		final = &no;
-		inicio->setNext(final);
-		final->setPrevious(inicio);
+    if (posicao_ > this->m_total_elementos || posicao_ < 1)
+    {
+        // std::cerr << "Indice fora do intervalo." << std::endl;
+        exit(0);
+    };
 
-	} else {
+    Node<T>* toRemove = this->inicio;
+    int counter = 1;
+    while (toRemove->getNext() != nullptr && counter < posicao_)
+    {
+        toRemove = toRemove->getNext();
+        counter++;
+    };
 
-		final->setNext(&no);
-		no.setPrevious(final);
-		final = &no;
+	this->unLinkNode(toRemove);
+    this->m_total_elementos--;
 
-	}
+    T val = toRemove->getValue();
+    delete toRemove;
+    return val;
+}
 
-	m_total_elementos++;	
+template<typename T>
+T Lista<T>::removerDoInicio() {
+	return this->removerDaPosicao(1);
+}
 
+template<typename T>
+T Lista<T>::removerDoFinal() {
+	return this->removerDaPosicao(this->m_total_elementos);
+}
+
+template<typename T>
+bool Lista<T>::vazio() {
+	return (m_total_elementos == 0);
 }
 
 template<typename T>
@@ -144,34 +175,77 @@ int Lista<T>::tamanho() {
 	return m_total_elementos;
 }
 
-
 template<typename T>
-T& Lista<T>::removerDoInicio() {
-
-	T* aux  = inicio;
-
-	inicio = inicio->getNext();
-	m_total_elementos--;	
-	return (*aux);
+void
+Lista<T>::unLinkNode(Node<T>* n){
+	if(n == nullptr){
+		// cerr << "Nó inválido!" << endl;
+		return;
+	}
+	Node<T>* nPrev = n->getPrevious();
+	Node<T>* nNext = n->getNext();
+	// atualize a linkagem dos nós anterior e posterior
+	//   nPrev    n    nNext
+	//     |             |
+	//     --->-------<---
+	if(nPrev != nullptr){
+		nPrev->setNext(nNext);
+	};
+	if(nNext != nullptr){
+		nNext->setPrevious(nPrev);
+	};
+	// remova os apontadores do no "n"
+	n->setPrevious(nullptr);
+	n->setNext(nullptr);
+	// atualize os apontadores inicial e final
+	if(n == this->inicio){
+		this->inicio = nNext;
+	};
+	if(n == this->final){
+		this->final = nPrev;
+	};
 }
 
-
-
 template<typename T>
-T& Lista<T>::removerDoFinal() {
-
-	T* aux  = final;
-
-	final = final->getPrevious();
-	m_total_elementos--;	
-	return (*aux);
-
-	return (*aux);
+void
+Lista<T>::linkNodeAfter(Node<T>* novo, Node<T>* nPrev){
+	if(novo == nullptr || nPrev == nullptr){
+		// cerr << "Nó inválido!" << endl;
+		return;
+	}
+	Node<T>* nNext = nPrev->getNext();
+	// posicionar o novo nó
+	novo->setPrevious(nPrev);
+	novo->setNext(nNext);
+	// realizar a inserção do novo nó
+	nPrev->setNext(novo);
+	if(nNext != nullptr){ // se estivermos inserindo no final da lista o próximo nó será nullptr
+		nNext->setPrevious(novo);
+	};
+	if(this->final == nPrev){ // se estivermos inserindo após o final, novo será o final
+		this->final = novo;
+	};
 }
 
 template<typename T>
-bool Lista<T>::vazio() {
-	return m_total_elementos == 0;
+void
+Lista<T>::linkNodeBefore(Node<T>* novo, Node<T>* nNext){
+	if(novo == nullptr || nNext == nullptr){
+		// cerr << "Nó inválido!" << endl;
+		return;
+	}
+	Node<T>* nPrev = nNext->getPrevious();
+	// posicionar o novo nó
+	novo->setPrevious(nPrev);
+	novo->setNext(nNext);
+	// realizar a inserção do novo nó
+	if(nPrev != nullptr){ // se estivermos inserindo no inicio da lista o nó anterior será nullptr
+		nPrev->setNext(novo);
+	}
+	nNext->setPrevious(novo);
+	if(this->inicio == nNext){ // se estivermos inserindo antes do inicio, novo será o inicio
+		this->inicio = novo;
+	};
 }
 
-#endif /* defined(__LinkedList__LinkedList__) */
+#endif /* defined(LISTA_H_) */

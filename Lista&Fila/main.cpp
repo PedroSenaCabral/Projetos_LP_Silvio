@@ -7,46 +7,36 @@
 int main(int argc, char const *argv[])
 {
 
-	Fila<Node<string>> f(4);
+	Fila<string> f(4);
 
 	f.vazio();
-	Node<string> n("Jerffeson");
-	f.enfileira(n);
+	f.enfileira("Jerffeson");
 
-	Node<string> n2("André");
-	f.enfileira(n2);
+	f.enfileira("Andre");
 
-	Node<string> n3("Fernanda");
-	f.enfileira(n3);
+	f.enfileira("Fernanda");
 
-	Node<string> n4("Allan");
-	f.enfileira(n4);
+	f.enfileira("Allan");
 
-	Node<string> n5("Silvio");
-	f.enfileira(n5);
+	f.enfileira("Silvio");
 
 	cout << "\nLista vazia: " << f.vazio() << endl;
 	cout << "Lista Cheia: " << f.cheio() << endl << endl;
 
-	cout << f.desenfileira().getValue() << endl;
+	cout << f.desenfileira() << endl;
 
-	cout << f.desenfileira().getValue() << endl;
+	cout << f.desenfileira() << endl;
 
-	cout << f.desenfileira().getValue() << endl << endl;
+	cout << f.desenfileira() << endl << endl;
 
-	Node<string> n6("Pedro");
-	f.enfileira(n6);
+	f.enfileira("Pedro");
 
-	cout << f.desenfileira().getValue() << endl;
+	cout << f.desenfileira() << endl;
 
-	cout << f.desenfileira().getValue() << endl;
+	cout << f.desenfileira() << endl;
 
 	cout << "\vLista vazia: " << f.vazio() << endl;
 	cout << "Lista Cheia: " << f.cheio() << endl;
-
 	
-	//cout << f.desenfileira2().getValue();
-
-	/* code */
 	return 0;
 }

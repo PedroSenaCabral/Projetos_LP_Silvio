@@ -23,12 +23,12 @@ public:
 };
 
 template<typename T>
-Node<T>::Node(void):
-next(NULL) {}
+Node<T>::Node():
+next(nullptr), prev(nullptr) {}
 
 template<typename T>
 Node<T>::Node(T val):
-value(val), next(NULL), prev(NULL) {}
+value(val), next(nullptr), prev(nullptr) {}
 
 template<typename T>
 Node<T>::Node(T val, Node* n, Node* p):
@@ -36,13 +36,13 @@ value(val), next(n), prev(p) {}
 
 template<typename T>
 T
-Node<T>::getValue(void){
+Node<T>::getValue(){
     return this->value;
 }
 
 template<typename T>
 Node<T>*
-Node<T>::getNext(void){
+Node<T>::getNext(){
     return this->next;
 }
 
@@ -54,7 +54,7 @@ Node<T>::setNext(Node<T>* n){
 
 template<typename T>
 Node<T>*
-Node<T>::getPrevious(void){
+Node<T>::getPrevious(){
 	return this->prev;
 }
 
