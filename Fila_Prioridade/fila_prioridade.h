@@ -36,7 +36,7 @@ void Fila_Prioridade<T>::enfileira(T& novo){
 	Node<T>* aux= this->m_elementos->getCalda()->getPrevious();
 	int posicao= this->tamanho() + 1;
 
-	while(aux != this->m_elementos->getCabeca() && novo > aux->getValue())
+	while(aux != this->m_elementos->getCabeca() && novo.first > aux->getValue().first)
 	{
 		aux= aux->getPrevious();
 		posicao--;
