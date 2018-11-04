@@ -56,7 +56,7 @@ T Pilha<T>::desempilhar(){
 		cerr << "ERRO! Pilha esta vazia. Nao desempilhar" << endl;
 		exit(0);
 	}
-	cout << "Chamando o proximo da Pilha: " << endl;
+	cout << "desempilhando o proximo da Pilha: " << endl;
 	return this->m_elementos->removerDoFinal();	
 }
 

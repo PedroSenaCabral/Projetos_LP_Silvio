@@ -6,7 +6,7 @@
 #include <cmath>
 
 
-int realizaOperacao(char operacao, double valor1, double valor2) {
+int realizaOperacao(char operacao, int valor1, int valor2) {
 	double resultado = 0;
 	switch (operacao) {
 		case ('+'):
@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
 
 	Pilha<int> pilha(50);
 	string notacao;
-
+	string notacaoFixa = " ";
 	cout << "Insira a expressão no formado Notação Polonesa Inversa: ";
 
 	cin.ignore(0, '\n');
@@ -57,26 +57,39 @@ int main(int argc, char const *argv[])
 
 		if (aux[0] == '+' || aux[0] == '-' || aux[0] == '*' || aux[0] == '/' ) { // Se a leitura do while foi uma operação
 			
-			// realiza alguma operação;
-			double a = pilha.desempilhar();
-			double b = pilha.desempilhar();
+			// ***** realizar alguma operação ******
+
+			int a = pilha.desempilhar();
+			int b = pilha.desempilhar();
 
 			// Os operandos tem que estar invertidos ao  desempilhar. 
-			// Assim evita algo do tipo: 10/5 -> 10 5 / ** empilha 10 **> pilha[10] **empilha 5**> pilha[10, 5] ** Desempilhar**> 5 / 10 
-			cout << "\nRealizando Operação: " << b << aux << a << " = "<< realizaOperacao(aux[0], b, a) << endl; 
-			
+			// Assim evita algo do tipo: 10/5 -> 10 5 / ** empilha 10 **> pilha[10] **empilha 5**> pilha[10, 5] ** Desempilhar**> 5 / 10 	
 			pilha.empilhar(realizaOperacao(aux[0], b, a));
+
+			if (notacaoFixa.compare(" ") != 0) {
+
+				if (i < notacao.length()) {
+					// Não é a ultima operação
+					notacaoFixa = "(" + notacaoFixa + aux[0] + to_string(a) + ")";
+				} else {
+					// É a ultima operação, logo não deve colocar os parenteses
+					notacaoFixa = notacaoFixa + aux[0] + to_string(a);
+				}
+				
+			} else {
+				notacaoFixa = "(" +to_string(b) + aux[0] + to_string(a) + ")";
+			}
 
 		} else { // Se a leitura do while foi um número
 
+			// Pega o valor em string, converte para inteiro com o stoi() e empilha
 			pilha.empilhar(stoi(aux));
-		 	cout << "Empilhando Valor: " << aux << endl;
 		
 		}
 
 	}
 
-	cout << "O resultado da operação é: " << pilha.desempilhar();
+	cout << "\nReseltado: " << pilha.desempilhar() << " Infixa: " << notacaoFixa << endl;
 		
 	return 0;
 }
