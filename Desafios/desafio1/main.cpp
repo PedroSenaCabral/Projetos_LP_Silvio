@@ -7,7 +7,6 @@
 
 // Remove todos os caracteres especiais e acentuados
 void prepararFrase(string& frase) {
-
 	
 	frase.erase(std::remove(frase.begin(), frase.end(), '.'), frase.end());
 	frase.erase(std::remove(frase.begin(), frase.end(), ','), frase.end());
@@ -40,6 +39,18 @@ void prepararFrase(string& frase) {
 	frase.erase(std::remove(frase.begin(), frase.end(), '|'), frase.end());
 	frase.erase(std::remove(frase.begin(), frase.end(), ' '), frase.end());
 
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'å'), frase.end());	
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'ä'), frase.end());	
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'ý'), frase.end());	
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'æ'), frase.end());	
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'å'), frase.end());	
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'ï'), frase.end());
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'ë'), frase.end());
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'Ð'), frase.end());
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'ü'), frase.end());
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'ñ'), frase.end());
+	//frase.erase(std::remove(frase.begin(), frase.end(), 'ö'), frase.end());
+
 	// replace(frase.begin(), frase.end(), "à", 'a');
 	// replace(frase.begin(), frase.end(), "á", 'a'); 
 	// replace(frase.begin(), frase.end(), "â", 'a'); 
@@ -61,8 +72,7 @@ void prepararFrase(string& frase) {
 	// replace(frase.begin(), frase.end(), "ù", 'u');
 	// replace(frase.begin(), frase.end(), "û", 'u');
 	// replace(frase.begin(), frase.end(), "ũ", 'u');
-
-
+	
 }
 
 
