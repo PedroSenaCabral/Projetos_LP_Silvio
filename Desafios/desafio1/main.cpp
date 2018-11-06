@@ -4,83 +4,54 @@
 
 #include <string>
 #include <algorithm> // Transformar string em minuscula
+#include <assert.h>  
 
-// Remove todos os caracteres especiais e acentuados
-void prepararFrase(string& frase) {
+bool verificarFrase(string& frase) {
+	unsigned int aux = frase.length()/2;
+	Pilha<char> pilha(aux);
+
+	/*
+	caso a frase seja ímpar, o primeiro caractere que deve ser lido é n+1,
+	exemplo:
+	frase: ana
+	aux = 3/2 = 1 (inteiro)
+	primeira iteração: 'a'
+	segunda iteração: deve ser 'a' da 2 posição, logo aux+1 = 2.
+	*/
+	unsigned int end = frase.length()%2 == 0 ? aux : aux+1;
+
+	for (unsigned int i = 0; i < aux; i++) 
+		if(frase[i] >= 'a' && frase[i] <= 'z' || frase[i] >= '0' && frase[i] <= '9')
+			pilha.empilhar(frase[i]);
+
+
+	for (unsigned int i = end; i < frase.length(); i++) 
+		if(frase[i] >= 'a' && frase[i] <= 'z' || frase[i] >= '0' && frase[i] <= '9')
+			if (frase[i] != pilha.desempilhar()) // desempilha e compara as string
+				return false;
+						
 	
-	frase.erase(std::remove(frase.begin(), frase.end(), '.'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), ','), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '\''), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '\"'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '!'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '@'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '#'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '$'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '%'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '&'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '*'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '('), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), ')'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '-'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '_'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '+'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '-'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '*'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '/'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '\\'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '?'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '{'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '['), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '}'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), ']'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '?'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), ':'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), ';'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), '|'), frase.end());
-	frase.erase(std::remove(frase.begin(), frase.end(), ' '), frase.end());
-
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'å'), frase.end());	
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'ä'), frase.end());	
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'ý'), frase.end());	
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'æ'), frase.end());	
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'å'), frase.end());	
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'ï'), frase.end());
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'ë'), frase.end());
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'Ð'), frase.end());
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'ü'), frase.end());
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'ñ'), frase.end());
-	//frase.erase(std::remove(frase.begin(), frase.end(), 'ö'), frase.end());
-
-	// replace(frase.begin(), frase.end(), "à", 'a');
-	// replace(frase.begin(), frase.end(), "á", 'a'); 
-	// replace(frase.begin(), frase.end(), "â", 'a'); 
-	// replace(frase.begin(), frase.end(), "ã", 'a'); 
-	// replace(frase.begin(), frase.end(), "ç", 'c'); 
-	// replace(frase.begin(), frase.end(), "è", 'e');
-	// replace(frase.begin(), frase.end(), "è", 'e'); 
-	// replace(frase.begin(), frase.end(), "ê", 'e');
-	// replace(frase.begin(), frase.end(), "ẽ", 'e');
-	// replace(frase.begin(), frase.end(), "í", 'i');
-	// replace(frase.begin(), frase.end(), "ì", 'i');
-	// replace(frase.begin(), frase.end(), "î", 'i');
-	// replace(frase.begin(), frase.end(), "ĩ", 'i');
-	// replace(frase.begin(), frase.end(), "ó", 'o');
-	// replace(frase.begin(), frase.end(), "ò", 'o');
-	// replace(frase.begin(), frase.end(), "ô", 'o');
-	// replace(frase.begin(), frase.end(), "õ", 'o');
-	// replace(frase.begin(), frase.end(), "ú", 'u');
-	// replace(frase.begin(), frase.end(), "ù", 'u');
-	// replace(frase.begin(), frase.end(), "û", 'u');
-	// replace(frase.begin(), frase.end(), "ũ", 'u');
-	
+	return true;
 }
 
+void checkFunction(){
+	string ane = "ane";
+	string frase1 = "arara";
+	string frase2 = "raiar";
+	string frase3 = "hanah";
+	string frase4 = "Socorram-me, SUBI NO ÔNIBUS EM MARROCOS";
 
+	assert(verificarFrase(ane)==false);
+	assert(verificarFrase(frase1));
+	assert(verificarFrase(frase2));
+	assert(verificarFrase(frase3));
+	assert(verificarFrase(frase4));
+}
 
 
 int main(int argc, char const *argv[])
 {
-
+	checkFunction();
 
 	bool palindromo = true;
 	string frase;
@@ -94,27 +65,9 @@ int main(int argc, char const *argv[])
 	if (original.length() > 1) {
 
 		frase = original;
+		transform(frase.begin(), frase.end(), frase.begin(), ::tolower);
 
-		prepararFrase(frase); // Remove todos os caracteres especiais e acentuados
-		
-		unsigned int aux = frase.length()/2;
-		Pilha<char> pilha(aux);
-
-		transform(frase.begin(), frase.end(), frase.begin(), ::tolower); // Converte a frase para minusculo
-
-		for (unsigned int i = 0; i < aux; i++) { // Empilha metade da: string -> [s, t, r] ou frase [f, r]
-			pilha.empilhar(frase[i]);
-		}
-
-		if (frase.length()%2 != 0) {
-			aux++; // Caso o tamanho da frase seja impar, pula o caracter do centro A - r - [a] - R - a
-		}
-
-		for (unsigned int i = aux; i < frase.length(); i++) { // desempilha e compara as string
-			if (frase[i] != pilha.desempilhar()){
-				palindromo = false;
-			}			
-		}
+		palindromo = verificarFrase(frase);
 
 		if (palindromo) {
 			cout << original << " é palindromo." << endl;
