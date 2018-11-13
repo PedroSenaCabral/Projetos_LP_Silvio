@@ -21,6 +21,7 @@ public:
 	void setAltura(float altura_);
 	float getAltura();
 
+	virtual void print()=0;
 	friend ostream& operator<< (ostream &o, Pessoa * p);
 	
 };

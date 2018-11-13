@@ -1,7 +1,6 @@
 #ifndef ASSTECNICO_H
 #define ASSTECNICO_H
 #include "funcionario.h"
-#include "supervisor.h"
 #include <string>
 class AssistenteTecnico: public Funcionario{
 private:
@@ -12,7 +11,8 @@ public:
 	~AssistenteTecnico();
 	float getBonusSalarial();
 	void setBonusSalarial(float bonus_salarial_);
-	Supervisor* getSupervisor();
-	void setSupervisor(Supervisor *supervisor_);
+	Funcionario* getSupervisor();
+	void setSupervisor(Funcionario * supervisor_);
+	void print();
 };
 #endif

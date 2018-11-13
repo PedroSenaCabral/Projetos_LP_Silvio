@@ -31,7 +31,11 @@ float Pessoa::getAltura(){
 	return m_altura;
 }
 
+void Pessoa::print(){
+	
+}
+
 ostream& operator<< (ostream &o, Pessoa *p) {
-o <<"Nome:"<< p->m_nome << " |Idade:" << p->m_idade << " |Altura:" << p->m_altura<<endl;
+	p->print();
 return o;
 }

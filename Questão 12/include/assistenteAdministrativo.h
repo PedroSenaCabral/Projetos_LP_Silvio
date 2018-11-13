@@ -14,5 +14,6 @@ public:
 	void setTurno(string turno_);
 	float getParticipacao();
 	void setParticipacao(float participacao_);
+	void print();
 };
 #endif

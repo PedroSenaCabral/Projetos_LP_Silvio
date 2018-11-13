@@ -1,4 +1,5 @@
 #include "gerente.h"
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -25,8 +26,8 @@ void Gerente::setSalario(float salario_){
 }
 
 void Gerente::print() {
-
-	cout<< "Nome:" << getNome() << "|" << "Idade"<<getIdade() << "|" <<"Altura: " <<getAltura()<<endl;
-	cout<< "Matricula"<<  getMatricula() <<"|" <<"Salario: " << getSalario() <<endl;
+	cout<< "Nome:" << getNome() << "|" << "Idade: "<<getIdade() << "|" <<"Altura: " <<getAltura()<<endl;
+	cout<< "Matricula: "<<  getMatricula() <<"|" <<"Salario: " << getSalario() <<endl;
+	cout<<endl;
 
 }

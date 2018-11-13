@@ -1,6 +1,6 @@
 #include "assistenteAdministrativo.h"
 #include <string>
-
+#include <iostream>
 using namespace std;
 AssistenteAdministrativo::AssistenteAdministrativo(string nome_,int idade_,float altura_, string matricula_, float salario_,string turno_,float participacao_):
 	Funcionario(nome_,idade_,altura_,matricula_,salario_),m_turno(turno_),m_participacao(participacao_){
@@ -22,4 +22,10 @@ float AssistenteAdministrativo::getParticipacao(){
 }
 void AssistenteAdministrativo::setParticipacao(float participacao_){
 	m_participacao = participacao_;
+}
+
+void AssistenteAdministrativo::print() {
+	cout<< "Nome:" << getNome() << "|" << "Idade: "<<getIdade() << "|" <<"Altura: " <<getAltura()<<endl;
+	cout<< "Matricula: "<<  getMatricula() <<"|" <<"Salario: " << getSalario() <<endl;
+	cout<< "Turno: " <<getTurno() <<"|"<<"Participacao: "<< getParticipacao()<<endl;
 }
