@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-#include "Pilha.h"
-#include <stack>
-=======
 #include <stack>
 using std::stack;
 
->>>>>>> 2a62b9ce1a97163594101063a45c50b16c43564a
 #include <iostream>
 
 #include <string>
@@ -43,11 +38,7 @@ int realizaOperacao(char operacao, int valor1, int valor2) {
 int main(int argc, char const *argv[])
 {
 
-<<<<<<< HEAD
-	stack<int> pilha;
-=======
 	stack<int> s;
->>>>>>> 2a62b9ce1a97163594101063a45c50b16c43564a
 	string notacao;
 	string notacaoFixa = " ";
 	cout << "Insira a expressão no formado Notação Polonesa Inversa: ";
@@ -57,11 +48,11 @@ int main(int argc, char const *argv[])
 
 
 
-	for (unsigned int i = 0; i < notacao.size(); i++) {
+	for (unsigned int i = 0; i < notacao.length(); i++) {
 		string aux = "";
 
 		
-		while (notacao[i] != ' ' && i < notacao.size()) { // lê cada caracter da string e contatena em 'aux' até encontrar um espaço
+		while (notacao[i] != ' ' && i < notacao.length()) { // lê cada caracter da string e contatena em 'aux' até encontrar um espaço
 			aux += notacao[i];
 			i++;
 		}
@@ -70,15 +61,6 @@ int main(int argc, char const *argv[])
 			
 			// ***** realizar alguma operação ******
 
-<<<<<<< HEAD
-			int a = pilha.top();
-			pilha.pop();
-			int b = pilha.top();
-			pilha.pop();
-			// Os operandos tem que estar invertidos ao  desempilhar. 
-			// Assim evita algo do tipo: 10/5 -> 10 5 / ** empilha 10 **> pilha[10] **empilha 5**> pilha[10, 5] ** Desempilhar**> 5 / 10 	
-			pilha.push(realizaOperacao(aux[0], b, a));
-=======
 			int a = s.top();
 			s.pop();
 			int b = s.top();
@@ -87,7 +69,6 @@ int main(int argc, char const *argv[])
 			// Os operandos tem que estar invertidos ao  desempilhar. 
 			// Assim evita algo do tipo: 10/5 -> 10 5 / ** empilha 10 **> pilha[10] **empilha 5**> pilha[10, 5] ** Desempilhar**> 5 / 10 	
 			s.push(realizaOperacao(aux[0], b, a));
->>>>>>> 2a62b9ce1a97163594101063a45c50b16c43564a
 
 			if (notacaoFixa.compare(" ") != 0) {
 
@@ -106,23 +87,13 @@ int main(int argc, char const *argv[])
 		} else { // Se a leitura do while foi um número
 
 			// Pega o valor em string, converte para inteiro com o stoi() e empilha
-<<<<<<< HEAD
-			pilha.push(stoi(aux));
-=======
 			s.push(stoi(aux));
->>>>>>> 2a62b9ce1a97163594101063a45c50b16c43564a
 		
 		}
 
 	}
 
-<<<<<<< HEAD
-	cout << "\nReseltado: " << pilha.top();
-	pilha.pop();
-	cout << " Infixa: " << notacaoFixa << endl;
-=======
 	cout << "\nReseltado: " << s.top() << " Infixa: " << notacaoFixa << endl;
->>>>>>> 2a62b9ce1a97163594101063a45c50b16c43564a
 		
 	return 0;
 }
