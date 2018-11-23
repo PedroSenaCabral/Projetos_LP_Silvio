@@ -1,10 +1,11 @@
 #include "Pilha.h"
-
+#include <stack>
 #include <iostream>
 
 #include <string>
 #include <cmath>
 
+using namespace std;
 
 int realizaOperacao(char operacao, int valor1, int valor2) {
 	double resultado = 0;
@@ -36,7 +37,7 @@ int realizaOperacao(char operacao, int valor1, int valor2) {
 int main(int argc, char const *argv[])
 {
 
-	Pilha<int> pilha(50);
+	stack<int> pilha;
 	string notacao;
 	string notacaoFixa = " ";
 	cout << "Insira a expressão no formado Notação Polonesa Inversa: ";
@@ -46,11 +47,11 @@ int main(int argc, char const *argv[])
 
 
 
-	for (unsigned int i = 0; i < notacao.length(); i++) {
+	for (unsigned int i = 0; i < notacao.size(); i++) {
 		string aux = "";
 
 		
-		while (notacao[i] != ' ' && i < notacao.length()) { // lê cada caracter da string e contatena em 'aux' até encontrar um espaço
+		while (notacao[i] != ' ' && i < notacao.size()) { // lê cada caracter da string e contatena em 'aux' até encontrar um espaço
 			aux += notacao[i];
 			i++;
 		}
@@ -59,12 +60,13 @@ int main(int argc, char const *argv[])
 			
 			// ***** realizar alguma operação ******
 
-			int a = pilha.desempilhar();
-			int b = pilha.desempilhar();
-
+			int a = pilha.top();
+			pilha.pop();
+			int b = pilha.top();
+			pilha.pop();
 			// Os operandos tem que estar invertidos ao  desempilhar. 
 			// Assim evita algo do tipo: 10/5 -> 10 5 / ** empilha 10 **> pilha[10] **empilha 5**> pilha[10, 5] ** Desempilhar**> 5 / 10 	
-			pilha.empilhar(realizaOperacao(aux[0], b, a));
+			pilha.push(realizaOperacao(aux[0], b, a));
 
 			if (notacaoFixa.compare(" ") != 0) {
 
@@ -83,13 +85,15 @@ int main(int argc, char const *argv[])
 		} else { // Se a leitura do while foi um número
 
 			// Pega o valor em string, converte para inteiro com o stoi() e empilha
-			pilha.empilhar(stoi(aux));
+			pilha.push(stoi(aux));
 		
 		}
 
 	}
 
-	cout << "\nReseltado: " << pilha.desempilhar() << " Infixa: " << notacaoFixa << endl;
+	cout << "\nReseltado: " << pilha.top();
+	pilha.pop();
+	cout << " Infixa: " << notacaoFixa << endl;
 		
 	return 0;
 }
