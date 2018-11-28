@@ -1,3 +1,14 @@
+/**
+ * @mainpage Pilha-fila
+ * @author
+ * @date 27/11/2018
+ * @version 1.0
+ *
+ * @file main.cpp
+ * @brief Arquivo principal do programa
+ * 
+ */
+
 #include <stack>
 #include <queue>
 #include <cmath>
