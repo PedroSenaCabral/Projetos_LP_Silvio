@@ -39,6 +39,8 @@ int main(int argc, char const *argv[])
 
 		/**
 		* Desenpilha o valor, calcula o valor (1, 2, 4, 8, 16 ...) com base no valor do cont
+		* e multiplica-os, caso o valor desempilhado seja 1, o número é adicionado ao total
+		* caso seja 0, 0 é somado ao total.
 		*/
 		total += pilha.top() * (pow(2,cont));
 		cont++;
@@ -47,16 +49,20 @@ int main(int argc, char const *argv[])
 
 	}
 
-	
+	// Exibe o numero em binario
 	cout<<"Numero binario: ";
 
+	/**
+	*	Exibe o valor binario informado pelo usuario
+	*/
 	while(!fila.empty()){
+		// Remove todos os elementos da fina.
 		cout<<fila.front();
 		fila.pop();
 	}
 
 	cout<<endl;
-	cout<<"Valor total: "<<total<<endl;
+	cout<<"Valor total: "<<total<<endl; // exibe o valor total
 
 	return 0;
 }
